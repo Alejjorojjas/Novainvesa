@@ -70,22 +70,128 @@ D:\OneDrive\Documentos\Repositorios GitHub\Dropshipping\
 │   ├── 06-design-system.md
 │   ├── 07-reglas-negocio.md
 │   └── 08-plan-metaads-chateapro.md
-├── Frontend/               ← React + Vite (por crear)
-├── Backend/                ← Node.js + Express (base creada)
+├── Frontend/                          ← React + Vite (esqueleto creado)
 │   ├── src/
 │   │   ├── config/
-│   │   │   └── database.js
-│   │   ├── routes/
-│   │   │   └── health.routes.js
-│   │   ├── controllers/    ← vacío
-│   │   ├── services/       ← vacío
-│   │   ├── middlewares/    ← vacío
-│   │   └── utils/          ← vacío
-│   ├── index.js
+│   │   │   ├── categories.js          ← 5 categorías definidas ✅
+│   │   │   └── site.js                ← config del sitio ✅
+│   │   ├── pages/                     ← 15 páginas esqueleto ✅
+│   │   │   ├── Home.jsx
+│   │   │   ├── CategoryPage.jsx
+│   │   │   ├── ProductPage.jsx
+│   │   │   ├── CartPage.jsx
+│   │   │   ├── CheckoutPage.jsx
+│   │   │   ├── ConfirmationPage.jsx
+│   │   │   ├── SearchPage.jsx
+│   │   │   ├── AboutPage.jsx
+│   │   │   ├── PrivacyPage.jsx
+│   │   │   ├── TermsPage.jsx
+│   │   │   ├── AccountPage.jsx
+│   │   │   ├── OrdersPage.jsx
+│   │   │   ├── WishlistPage.jsx
+│   │   │   ├── AdminPage.jsx
+│   │   │   └── NotFoundPage.jsx
+│   │   ├── components/
+│   │   │   ├── layout/
+│   │   │   │   ├── Navbar.jsx         ← por implementar
+│   │   │   │   ├── Footer.jsx         ← por implementar
+│   │   │   │   └── LanguageSelector.jsx ← por implementar
+│   │   │   ├── home/
+│   │   │   │   ├── HeroBanner.jsx     ← por implementar
+│   │   │   │   ├── CategoryGrid.jsx   ← por implementar
+│   │   │   │   └── FeaturedProducts.jsx ← por implementar
+│   │   │   ├── category/
+│   │   │   │   ├── CategoryBanner.jsx ← por implementar
+│   │   │   │   └── ProductGrid.jsx    ← por implementar
+│   │   │   ├── product/
+│   │   │   │   ├── ProductCard.jsx    ← por implementar
+│   │   │   │   ├── ProductDetail.jsx  ← por implementar
+│   │   │   │   ├── ProductImages.jsx  ← por implementar
+│   │   │   │   └── WhatsAppButton.jsx ← por implementar
+│   │   │   ├── cart/
+│   │   │   │   ├── CartDrawer.jsx     ← por implementar
+│   │   │   │   └── CartItem.jsx       ← por implementar
+│   │   │   ├── checkout/
+│   │   │   │   ├── CheckoutForm.jsx   ← por implementar
+│   │   │   │   ├── PaymentSelector.jsx ← por implementar
+│   │   │   │   └── OrderSummary.jsx   ← por implementar
+│   │   │   └── common/
+│   │   │       ├── WhatsAppFloat.jsx  ← por implementar
+│   │   │       ├── LoadingSpinner.jsx ← por implementar
+│   │   │       ├── ErrorMessage.jsx   ← por implementar
+│   │   │       └── SEOHead.jsx        ← por implementar
+│   │   ├── context/
+│   │   │   ├── CartContext.jsx        ← implementado ✅
+│   │   │   └── LanguageContext.jsx    ← por implementar
+│   │   ├── hooks/
+│   │   │   ├── useCart.js             ← por implementar
+│   │   │   ├── useProducts.js         ← por implementar
+│   │   │   └── usePixel.js            ← por implementar
+│   │   ├── services/
+│   │   │   ├── api.js                 ← implementado ✅
+│   │   │   ├── products.service.js    ← por implementar
+│   │   │   └── orders.service.js      ← por implementar
+│   │   ├── utils/
+│   │   │   ├── formatters.js          ← implementado ✅
+│   │   │   ├── validators.js          ← por implementar
+│   │   │   └── pixel.js               ← por implementar
+│   │   ├── locales/
+│   │   │   ├── es/translation.json    ← por implementar
+│   │   │   ├── en/translation.json    ← por implementar
+│   │   │   └── pt/translation.json    ← por implementar
+│   │   ├── App.jsx                    ← rutas configuradas ✅
+│   │   ├── index.css                  ← Tailwind configurado ✅
+│   │   └── main.jsx
+│   ├── .env                           ← NO tocar ni subir a GitHub
+│   ├── vite.config.js                 ← Tailwind + React configurado ✅
+│   └── package.json
+├── Backend/                           ← Node.js + Express (esqueleto creado)
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── database.js            ← conexión MySQL configurada ✅
+│   │   ├── routes/                    ← 11 archivos de rutas (esqueleto) ✅
+│   │   │   ├── health.routes.js       ← implementado ✅
+│   │   │   ├── products.routes.js     ← por implementar
+│   │   │   ├── orders.routes.js       ← por implementar
+│   │   │   ├── payments.routes.js     ← por implementar
+│   │   │   ├── webhooks.routes.js     ← por implementar
+│   │   │   ├── tracking.routes.js     ← por implementar
+│   │   │   ├── auth.routes.js         ← por implementar
+│   │   │   ├── users.routes.js        ← por implementar
+│   │   │   ├── admin.routes.js        ← por implementar
+│   │   │   ├── pixel.routes.js        ← por implementar
+│   │   │   ├── email.routes.js        ← por implementar
+│   │   │   └── coverage.routes.js     ← por implementar
+│   │   ├── controllers/               ← 7 archivos vacíos listos
+│   │   │   ├── products.controller.js
+│   │   │   ├── orders.controller.js
+│   │   │   ├── payments.controller.js
+│   │   │   ├── webhooks.controller.js
+│   │   │   ├── auth.controller.js
+│   │   │   ├── users.controller.js
+│   │   │   └── admin.controller.js
+│   │   ├── services/                  ← 6 archivos vacíos listos
+│   │   │   ├── dropi.service.js
+│   │   │   ├── wompi.service.js
+│   │   │   ├── mercadopago.service.js
+│   │   │   ├── email.service.js
+│   │   │   ├── pixel.service.js
+│   │   │   └── stats.service.js
+│   │   ├── middlewares/               ← 4 archivos vacíos listos
+│   │   │   ├── auth.middleware.js
+│   │   │   ├── admin.middleware.js
+│   │   │   ├── validate.middleware.js
+│   │   │   └── rateLimit.middleware.js
+│   │   └── utils/                     ← 3 archivos vacíos listos
+│   │       ├── logger.js
+│   │       ├── helpers.js
+│   │       └── formatters.js
+│   ├── index.js                       ← servidor + rutas registradas ✅
 │   ├── package.json
-│   └── .env               ← NO tocar ni subir a GitHub
+│   └── .env                           ← NO tocar ni subir a GitHub
 ├── .gitignore
 ├── CONTRIBUTING.md
+├── CLAUDE-CODE-PROMPT.md
 └── README.md
 ```
 
@@ -347,8 +453,21 @@ git push
 
 > Escribe aquí la tarea específica que quieres que Claude Code ejecute.
 > 
-> Ejemplos:
-> - "Construye todos los endpoints del backend siguiendo el contrato de API del documento 04"
-> - "Crea el proyecto de React con Vite en la carpeta Frontend y configura Tailwind, React Router e i18next"
-> - "Construye el componente ProductCard y la página Home completa"
-> - "Crea el endpoint de productos que consulta la API de Dropi y guarda métricas en product_stats"
+> **Tareas sugeridas en orden de prioridad:**
+>
+> **Backend:**
+> - "Implementa el módulo de productos: products.routes.js, products.controller.js y dropi.service.js siguiendo el documento docs/04-API-contract.md"
+> - "Implementa el módulo de autenticación: auth.routes.js, auth.controller.js, auth.middleware.js con JWT y bcrypt"
+> - "Implementa el módulo de pedidos COD: orders.routes.js, orders.controller.js con inserción en MySQL"
+> - "Implementa los webhooks de Wompi y MercadoPago con verificación HMAC"
+> - "Implementa el panel de administración: admin.routes.js, admin.controller.js con JWT admin"
+>
+> **Frontend:**
+> - "Implementa el Navbar, Footer y LanguageSelector siguiendo el design system del documento docs/06-design-system.md"
+> - "Implementa la página Home completa con HeroBanner, CategoryGrid y FeaturedProducts"
+> - "Implementa ProductCard y la página CategoryPage con grid de productos"
+> - "Implementa la página de ProductPage con galería, precio y botones de compra"
+> - "Implementa el CartDrawer y la página de CartPage"
+> - "Implementa el CheckoutPage completo con los 3 métodos de pago"
+> - "Implementa el sistema de i18n con los archivos de traducción ES/EN/PT"
+> - "Implementa el Meta Pixel con todos los eventos en utils/pixel.js"
