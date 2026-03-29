@@ -1,0 +1,34 @@
+﻿# Dependencias
+node_modules/
+.npm
+
+# Variables de entorno — NUNCA subir esto
+.env
+.env.local
+.env.production
+frontend/.env
+backend/.env
+
+# Builds
+frontend/dist/
+frontend/build/
+backend/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Temporales
+*.tmp
+*.temp
