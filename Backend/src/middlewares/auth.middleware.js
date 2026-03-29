@@ -51,4 +51,16 @@ async function verifyToken(req, res, next) {
   }
 }
 
-module.exports = { verifyToken }
+// Middleware para endpoints internos — verifica header x-api-key
+function verifyApiKey(req, res, next) {
+  const apiKey = req.headers['x-api-key']
+  if (!apiKey || apiKey !== process.env.INTERNAL_API_KEY) {
+    return res.status(401).json({
+      success: false,
+      error: { code: 'UNAUTHORIZED', message: 'API key inválida o ausente' },
+    })
+  }
+  next()
+}
+
+module.exports = { verifyToken, verifyApiKey }
