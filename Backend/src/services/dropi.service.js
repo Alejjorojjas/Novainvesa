@@ -21,19 +21,26 @@ async function getToken() {
   }
 
   // POST /api/v1/login
+  const loginUrl = `${BASE_URL}/api/v1/login`
+  console.log('[Dropi] getToken → POST', loginUrl, '| email:', email)
+
   const response = await axios.post(
-    `${BASE_URL}/api/v1/login`,
+    loginUrl,
     { email, password },
     { headers: { 'Content-Type': 'application/json' }, timeout: 10000 }
   )
+
+  console.log('[Dropi] getToken ← status:', response.status, '| keys en body:', Object.keys(response.data || {}))
 
   const body = response.data
   const token = body.token || body.data?.token || body.access_token
 
   if (!token) {
+    console.error('[Dropi] getToken — token no encontrado. Body completo:', JSON.stringify(body))
     throw new Error('Dropi login no devolvió un token válido')
   }
 
+  console.log('[Dropi] getToken — token obtenido, expira en', TOKEN_TTL_MS / 60000, 'min')
   _tokenCache = { value: token, expiresAt: now + TOKEN_TTL_MS }
   return token
 }
@@ -55,10 +62,20 @@ async function dropiRequest(method, path, options = {}) {
     ...rest,
   }
 
+  console.log('[Dropi] request →', method.toUpperCase(), config.url)
+
   try {
-    return await axios(config)
+    const res = await axios(config)
+    console.log('[Dropi] request ←', res.status, config.url)
+    return res
   } catch (err) {
-    if (err.response?.status === 401 && !_retry) {
+    const status = err.response?.status
+    console.error('[Dropi] request error', method.toUpperCase(), config.url, '| status:', status, '| msg:', err.message)
+    if (err.response?.data) {
+      console.error('[Dropi] error body:', JSON.stringify(err.response.data))
+    }
+    if (status === 401 && !_retry) {
+      console.log('[Dropi] 401 — invalidando token y reintentando...')
       _tokenCache = null
       return dropiRequest(method, path, { ...options, _retry: true })
     }
@@ -130,6 +147,8 @@ async function getProducts({ category, limit = 20, page = 1, featured = false } 
   }
 
   if (featured) body.featured = true
+
+  console.log('[Dropi] getProducts — body enviado:', JSON.stringify(body))
 
   const response = await dropiRequest('POST', '/api/v1/products/getproducts', { data: body })
   const res = response.data
