@@ -20,7 +20,7 @@ async function dropiRequest(method, path, options = {}) {
       "Content-Type": "application/json",
       ...extraHeaders,
     },
-    timeout: 10000,
+    timeout: 15000,
     ...rest,
   };
 
@@ -28,13 +28,14 @@ async function dropiRequest(method, path, options = {}) {
 
   try {
     const res = await axios(config);
-    console.log("[Dropi] request ←", res.status, config.url);
+    console.log("[Dropi] request ←", res.status);
     return res;
   } catch (err) {
     const status = err.response?.status;
+
     console.error(
-      "[Dropi] request error",
-      method.toUpperCase(),
+      "[Dropi] ERROR →",
+      method,
       config.url,
       "| status:",
       status,
@@ -43,7 +44,7 @@ async function dropiRequest(method, path, options = {}) {
     );
 
     if (err.response?.data) {
-      console.error("[Dropi] error body:", JSON.stringify(err.response.data));
+      console.error("[Dropi] BODY:", JSON.stringify(err.response.data));
     }
 
     throw err;
@@ -62,156 +63,78 @@ function slugify(text = "") {
     .replace(/\s+/g, "-");
 }
 
-function mapProduct(p, full = false) {
-  const base = {
-    id: String(p.id),
-    name: p.name || p.title,
-    slug: p.slug || slugify(p.name || p.title || ""),
-    category: p.category_slug || p.category || "",
-    price: Math.round(p.price || p.sale_price || 0),
-    currency: "COP",
-    images: Array.isArray(p.images)
-      ? p.images.map((img) =>
-          typeof img === "string" ? img : img.url || img.src,
-        )
-      : [p.image].filter(Boolean),
-    shortDescription: p.short_description || "",
-    inStock: p.in_stock !== undefined ? p.in_stock : true,
-    featured: p.featured || p.is_featured || false,
-    dropiProductId: String(p.id),
-  };
-
-  if (!full) return base;
-
+function mapProduct(p) {
   return {
-    ...base,
+    id: String(p.id),
+    name: p.name,
+    slug: slugify(p.name),
+    price: Math.round(p.price || 0),
+    currency: "COP",
+    images: p.images || [],
     description: p.description || "",
-    compareAtPrice: p.compare_at_price
-      ? Math.round(p.compare_at_price)
-      : undefined,
-    benefits: Array.isArray(p.benefits) ? p.benefits : [],
-    weight: p.weight || null,
-    relatedProducts: Array.isArray(p.related_products)
-      ? p.related_products.map(String)
-      : [],
+    inStock: p.stock > 0,
+    dropiProductId: String(p.id),
   };
 }
 
-// ─── Public API ───────────────────────────────────────────────────────────────
+// ─── PRODUCTS ────────────────────────────────────────────────────────────────
 
-// POST /api/v1/products/getproducts
-async function getProducts({
-  category,
-  limit = 20,
-  page = 1,
-  featured = false,
-} = {}) {
+// GET /api/integration/products
+async function getProducts({ limit = 20, page = 1 } = {}) {
   const safeLimit = Math.min(Number(limit) || 20, 50);
   const safePage = Math.max(Number(page) || 1, 1);
 
-  const startData = (safePage - 1) * safeLimit + 1;
+  const response = await dropiRequest(
+    "GET",
+    `/api/integration/products?page=${safePage}&limit=${safeLimit}`,
+  );
 
-  const body = {
-    pageSize: safeLimit,
-    startData,
-    no_count: false,
-    order_by: "id",
-    order_type: "asc",
-    keywords: "",
-    category: category ? [category] : [],
-    favorite: false,
-    privated_product: false,
-  };
-
-  if (featured) body.featured = true;
-
-  const response = await dropiRequest("POST", "/api/v1/products/getproducts", {
-    data: body,
-  });
-
-  const res = response.data;
-
-  const rawProducts = Array.isArray(res.objects)
-    ? res.objects
-    : Array.isArray(res.data)
-      ? res.data
-      : Array.isArray(res)
-        ? res
-        : [];
-
-  const total = res.count || res.total || rawProducts.length;
-  const totalPages = Math.ceil(total / safeLimit);
+  const data = response.data?.data || response.data || [];
 
   return {
-    products: rawProducts.map((p) => mapProduct(p, false)),
+    products: data.map(mapProduct),
     pagination: {
-      total,
       page: safePage,
       limit: safeLimit,
-      totalPages,
-      hasNextPage: safePage < totalPages,
-      hasPrevPage: safePage > 1,
+      total: data.length,
+      totalPages: 1, // Dropi integration no siempre devuelve total real
     },
   };
 }
 
-// GET /api/v1/products/:id
+// GET /api/integration/products/:id
 async function getProductById(id) {
-  const response = await dropiRequest("GET", `/api/v1/products/${id}`);
-  const body = response.data;
-  const raw = body.data || body;
+  const response = await dropiRequest("GET", `/api/integration/products/${id}`);
 
-  if (!raw || !raw.id) return null;
-  return mapProduct(raw, true);
+  const data = response.data?.data || response.data;
+
+  if (!data) return null;
+
+  return mapProduct(data);
 }
 
-// Búsqueda
+// búsqueda básica local (Dropi no siempre soporta search)
 async function searchProducts(query, limit = 20) {
-  const safeLimit = Math.min(Number(limit) || 20, 50);
+  const { products } = await getProducts({ limit });
 
-  const body = {
-    pageSize: safeLimit,
-    startData: 1,
-    no_count: false,
-    order_by: "id",
-    order_type: "asc",
-    keywords: query,
-    category: [],
-    favorite: false,
-    privated_product: false,
-  };
-
-  const response = await dropiRequest("POST", "/api/v1/products/getproducts", {
-    data: body,
-  });
-
-  const res = response.data;
-
-  const rawProducts = Array.isArray(res.objects)
-    ? res.objects
-    : Array.isArray(res.data)
-      ? res.data
-      : Array.isArray(res)
-        ? res
-        : [];
+  const filtered = products.filter((p) =>
+    p.name.toLowerCase().includes(query.toLowerCase()),
+  );
 
   return {
     query,
-    results: rawProducts.map((p) => mapProduct(p, false)),
-    total: res.count || res.total || rawProducts.length,
+    results: filtered,
+    total: filtered.length,
   };
 }
 
-// COD Coverage
-async function checkCodCoverage(city) {
-  const response = await dropiRequest("GET", "/api/v1/logistic/cities");
-  const body = response.data;
+// ─── CIUDADES / COD ──────────────────────────────────────────────────────────
 
-  const cities = Array.isArray(body.data)
-    ? body.data
-    : Array.isArray(body)
-      ? body
-      : [];
+// GET /api/integration/cities
+async function checkCodCoverage(city) {
+  const response = await dropiRequest("GET", "/api/integration/cities");
+
+  const cities = response.data?.data || response.data || [];
 
   const normalizedQuery = city
     .toLowerCase()
@@ -219,68 +142,65 @@ async function checkCodCoverage(city) {
     .replace(/[\u0300-\u036f]/g, "");
 
   const match = cities.find((c) => {
-    const cityName = (c.name || c.city || "")
+    const name = (c.name || "")
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
-    return cityName === normalizedQuery;
+
+    return name === normalizedQuery;
   });
 
   return {
     city,
-    codAvailable: match
-      ? (match.cod_available ?? match.available ?? true)
-      : false,
-    estimatedDelivery: match?.estimated_delivery || "3-7 días hábiles",
+    codAvailable: match ? match.cod : false,
+    estimatedDelivery: "3-7 días hábiles",
   };
 }
 
-// Crear orden
+// ─── ORDERS ──────────────────────────────────────────────────────────────────
+
+// POST /api/integration/orders
 async function createOrder(orderData) {
-  const dropiPayload = {
+  const payload = {
     customer: {
-      full_name: orderData.customer.fullName,
-      id_number: orderData.customer.idNumber || "",
-      email: orderData.customer.email,
+      name: orderData.customer.fullName,
       phone: orderData.customer.phone,
+      email: orderData.customer.email,
     },
-    shipping_address: {
-      country: orderData.shipping.country || "CO",
-      department: orderData.shipping.department,
+    shipping: {
       city: orderData.shipping.city,
       address: orderData.shipping.address,
-      neighborhood: orderData.shipping.neighborhood || "",
-      notes: orderData.shipping.notes || "",
     },
-    items: orderData.items.map((item) => ({
-      product_id: item.dropiProductId || item.productId,
+    products: orderData.items.map((item) => ({
+      id: item.dropiProductId,
       quantity: item.quantity,
-      unit_price: item.unitPrice,
     })),
-    payment_method: orderData.payment.method,
-    reference: orderData.reference,
+    payment_method: orderData.payment.method || "COD",
   };
 
-  const response = await dropiRequest("POST", "/api/v1/orders/store", {
-    data: dropiPayload,
+  const response = await dropiRequest("POST", "/api/integration/orders", {
+    data: payload,
   });
 
-  const body = response.data;
-  const data = body.data || body;
+  const data = response.data?.data || response.data;
 
   return {
-    dropiOrderId: String(data.id || data.order_id),
+    dropiOrderId: String(data.id),
     status: data.status || "CREATED",
-    estimatedDelivery: data.estimated_delivery || "3-7 días hábiles",
   };
 }
 
-// Estado orden
-async function getOrderStatus(dropiOrderId) {
-  const response = await dropiRequest("GET", `/api/v1/orders/${dropiOrderId}`);
-  const body = response.data;
-  return body.data || body;
+// GET /api/integration/orders/:id
+async function getOrderStatus(orderId) {
+  const response = await dropiRequest(
+    "GET",
+    `/api/integration/orders/${orderId}`,
+  );
+
+  return response.data?.data || response.data;
 }
+
+// ─── EXPORT ──────────────────────────────────────────────────────────────────
 
 module.exports = {
   getProducts,
