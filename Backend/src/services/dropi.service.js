@@ -1,203 +1,252 @@
-const axios = require("axios");
+const axios = require('axios')
 
-const BASE_URL = "https://api.dropi.co";
+const BASE_URL = 'https://api.dropi.co'
 
 // ─── Axios wrapper ────────────────────────────────────────────────────────────
 async function dropiRequest(method, path, options = {}) {
-  const token = process.env.DROPI_INTEGRATION_TOKEN;
+  const token = process.env.DROPI_INTEGRATION_TOKEN
 
   if (!token) {
-    throw new Error("DROPI_INTEGRATION_TOKEN es requerido");
+    throw new Error('DROPI_INTEGRATION_TOKEN es requerido')
   }
 
-  const { headers: extraHeaders = {}, ...rest } = options;
+  const { headers: extraHeaders = {}, ...rest } = options
 
   const config = {
     method,
     url: `${BASE_URL}${path}`,
     headers: {
-      "dropi-integracion-key": token,
-      "Content-Type": "application/json",
+      'dropi-integracion-key': token,
+      'Content-Type': 'application/json',
       ...extraHeaders,
     },
     timeout: 15000,
     ...rest,
-  };
-
-  console.log("[Dropi] request →", method.toUpperCase(), config.url);
+  }
 
   try {
-    const res = await axios(config);
-    console.log("[Dropi] request ←", res.status);
-    return res;
+    console.log('[Dropi] →', method, config.url)
+    const res = await axios(config)
+    console.log('[Dropi] ←', res.status, config.url)
+    return res
   } catch (err) {
-    const status = err.response?.status;
-
-    console.error(
-      "[Dropi] ERROR →",
-      method,
-      config.url,
-      "| status:",
-      status,
-      "| msg:",
-      err.message,
-    );
+    const status = err.response?.status
+    console.error('[Dropi] ERROR →', method, config.url, '| status:', status)
 
     if (err.response?.data) {
-      console.error("[Dropi] BODY:", JSON.stringify(err.response.data));
+      console.error('[Dropi] BODY:', JSON.stringify(err.response.data))
     }
 
-    throw err;
+    throw err
   }
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function slugify(text = "") {
+function slugify(text = '') {
   return text
     .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s-]/g, "")
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
     .trim()
-    .replace(/\s+/g, "-");
+    .replace(/\s+/g, '-')
 }
 
 function mapProduct(p) {
   return {
     id: String(p.id),
-    name: p.name,
-    slug: slugify(p.name),
-    price: Math.round(p.price || 0),
-    currency: "COP",
-    images: p.images || [],
-    description: p.description || "",
-    inStock: p.stock > 0,
+    name: p.name || p.title,
+    slug: slugify(p.name || ''),
+    price: Math.round(p.price || p.sale_price || 0),
+    currency: 'COP',
+    images: Array.isArray(p.images)
+      ? p.images.map(i => (typeof i === 'string' ? i : i.url || i.src))
+      : [],
+    description: p.description || '',
+    inStock: p.in_stock ?? true,
     dropiProductId: String(p.id),
-  };
+  }
 }
 
-// ─── PRODUCTS ────────────────────────────────────────────────────────────────
+// ─── CORE: GET PRODUCTS (AUTO FALLBACK) ──────────────────────────────────────
 
-// GET /api/integration/products
 async function getProducts({ limit = 20, page = 1 } = {}) {
-  const safeLimit = Math.min(Number(limit) || 20, 50);
-  const safePage = Math.max(Number(page) || 1, 1);
+  const safeLimit = Math.min(Number(limit) || 20, 50)
+  const safePage = Math.max(Number(page) || 1, 1)
+
+  // ── 1. Intentar Integration API ────────────────────────────────────────────
+  try {
+    const res = await dropiRequest(
+      'GET',
+      `/api/integration/products?page=${safePage}&limit=${safeLimit}`
+    )
+
+    const data = res.data?.data || res.data || []
+
+    console.log('[Dropi] usando integration API')
+
+    return {
+      products: data.map(mapProduct),
+      source: 'integration',
+    }
+  } catch (err) {
+    if (err.response?.status !== 404) throw err
+    console.log('[Dropi] integration API no disponible, fallback a v1...')
+  }
+
+  // ── 2. Fallback a API clásica (/api/v1) ─────────────────────────────────────
+  const startData = (safePage - 1) * safeLimit + 1
+
+  const body = {
+    pageSize: safeLimit,
+    startData,
+    no_count: false,
+    order_by: 'id',
+    order_type: 'asc',
+    keywords: '',
+    category: [],
+    favorite: false,
+    privated_product: false,
+  }
 
   const response = await dropiRequest(
-    "GET",
-    `/api/integration/products?page=${safePage}&limit=${safeLimit}`,
-  );
+    'POST',
+    '/api/v1/products/getproducts',
+    { data: body }
+  )
 
-  const data = response.data?.data || response.data || [];
+  const res = response.data
+
+  const rawProducts = Array.isArray(res.objects) ? res.objects : []
 
   return {
-    products: data.map(mapProduct),
-    pagination: {
-      page: safePage,
-      limit: safeLimit,
-      total: data.length,
-      totalPages: 1, // Dropi integration no siempre devuelve total real
-    },
-  };
+    products: rawProducts.map(mapProduct),
+    total: res.count || rawProducts.length,
+    source: 'v1',
+  }
 }
 
-// GET /api/integration/products/:id
+// ─── PRODUCT BY ID ───────────────────────────────────────────────────────────
+
 async function getProductById(id) {
-  const response = await dropiRequest("GET", `/api/integration/products/${id}`);
+  // intentar integration
+  try {
+    const res = await dropiRequest(
+      'GET',
+      `/api/integration/products/${id}`
+    )
 
-  const data = response.data?.data || response.data;
+    const data = res.data?.data || res.data
+    if (data) return mapProduct(data)
 
-  if (!data) return null;
+  } catch (err) {
+    if (err.response?.status !== 404) throw err
+  }
 
-  return mapProduct(data);
+  // fallback NO disponible en v1 (no hay endpoint directo fiable)
+  return null
 }
 
-// búsqueda básica local (Dropi no siempre soporta search)
-async function searchProducts(query, limit = 20) {
-  const { products } = await getProducts({ limit });
+// ─── SEARCH ──────────────────────────────────────────────────────────────────
 
-  const filtered = products.filter((p) =>
-    p.name.toLowerCase().includes(query.toLowerCase()),
-  );
+async function searchProducts(query, limit = 20) {
+  const { products } = await getProducts({ limit })
+
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(query.toLowerCase())
+  )
 
   return {
     query,
     results: filtered,
     total: filtered.length,
-  };
+  }
 }
 
-// ─── CIUDADES / COD ──────────────────────────────────────────────────────────
+// ─── COD COVERAGE ────────────────────────────────────────────────────────────
 
-// GET /api/integration/cities
 async function checkCodCoverage(city) {
-  const response = await dropiRequest("GET", "/api/integration/cities");
+  try {
+    const res = await dropiRequest('GET', '/api/integration/cities')
 
-  const cities = response.data?.data || response.data || [];
+    const cities = res.data?.data || res.data || []
 
-  const normalizedQuery = city
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-
-  const match = cities.find((c) => {
-    const name = (c.name || "")
+    const normalizedQuery = city
       .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
 
-    return name === normalizedQuery;
-  });
+    const match = cities.find(c =>
+      (c.name || '').toLowerCase().includes(normalizedQuery)
+    )
 
-  return {
-    city,
-    codAvailable: match ? match.cod : false,
-    estimatedDelivery: "3-7 días hábiles",
-  };
+    return {
+      city,
+      codAvailable: !!match,
+    }
+  } catch {
+    return {
+      city,
+      codAvailable: false,
+    }
+  }
 }
 
-// ─── ORDERS ──────────────────────────────────────────────────────────────────
+// ─── CREATE ORDER ────────────────────────────────────────────────────────────
 
-// POST /api/integration/orders
 async function createOrder(orderData) {
-  const payload = {
-    customer: {
-      name: orderData.customer.fullName,
-      phone: orderData.customer.phone,
-      email: orderData.customer.email,
-    },
-    shipping: {
-      city: orderData.shipping.city,
-      address: orderData.shipping.address,
-    },
-    products: orderData.items.map((item) => ({
-      id: item.dropiProductId,
-      quantity: item.quantity,
-    })),
-    payment_method: orderData.payment.method || "COD",
-  };
+  try {
+    const payload = {
+      customer: {
+        name: orderData.customer.fullName,
+        phone: orderData.customer.phone,
+        email: orderData.customer.email,
+      },
+      shipping: {
+        city: orderData.shipping.city,
+        address: orderData.shipping.address,
+      },
+      products: orderData.items.map(i => ({
+        id: i.dropiProductId,
+        quantity: i.quantity,
+      })),
+      payment_method: orderData.payment.method || 'COD',
+    }
 
-  const response = await dropiRequest("POST", "/api/integration/orders", {
-    data: payload,
-  });
+    const res = await dropiRequest(
+      'POST',
+      '/api/integration/orders',
+      { data: payload }
+    )
 
-  const data = response.data?.data || response.data;
+    const data = res.data?.data || res.data
 
-  return {
-    dropiOrderId: String(data.id),
-    status: data.status || "CREATED",
-  };
+    return {
+      dropiOrderId: String(data.id),
+      status: data.status || 'CREATED',
+    }
+
+  } catch (err) {
+    console.error('[Dropi] createOrder error')
+    throw err
+  }
 }
 
-// GET /api/integration/orders/:id
-async function getOrderStatus(orderId) {
-  const response = await dropiRequest(
-    "GET",
-    `/api/integration/orders/${orderId}`,
-  );
+// ─── ORDER STATUS ────────────────────────────────────────────────────────────
 
-  return response.data?.data || response.data;
+async function getOrderStatus(orderId) {
+  try {
+    const res = await dropiRequest(
+      'GET',
+      `/api/integration/orders/${orderId}`
+    )
+
+    return res.data?.data || res.data
+  } catch (err) {
+    console.error('[Dropi] getOrderStatus error')
+    throw err
+  }
 }
 
 // ─── EXPORT ──────────────────────────────────────────────────────────────────
@@ -209,4 +258,4 @@ module.exports = {
   checkCodCoverage,
   createOrder,
   getOrderStatus,
-};
+}
