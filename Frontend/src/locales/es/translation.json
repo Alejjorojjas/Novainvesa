@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "cart": "Carrito",
+    "myAccount": "Mi cuenta",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "search": "Buscar productos..."
+  },
+  "categories": {
+    "mascotas": "Mascotas",
+    "hogar": "Hogar",
+    "tecnologia": "Tecnología",
+    "belleza": "Belleza",
+    "fitness": "Fitness",
+    "all": "Todas las categorías"
+  },
+  "product": {
+    "addToCart": "Agregar al carrito",
+    "buyNow": "Comprar ahora",
+    "outOfStock": "Agotado",
+    "sale": "OFERTA",
+    "notify": "Avisarme cuando esté disponible",
+    "whatsappBuy": "Comprar por WhatsApp",
+    "relatedProducts": "Productos relacionados",
+    "description": "Descripción",
+    "benefits": "Beneficios",
+    "quantity": "Cantidad",
+    "inCart": "En tu carrito",
+    "shipping": "Envío gratis",
+    "guarantee": "Garantía de satisfacción",
+    "returns": "Devoluciones fáciles"
+  },
+  "cart": {
+    "title": "Mi carrito",
+    "empty": "Tu carrito está vacío",
+    "emptyDesc": "Agrega productos para comenzar tu pedido",
+    "viewProducts": "Ver productos",
+    "continueShopping": "Seguir comprando",
+    "remove": "Eliminar",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Ir al checkout",
+    "item": "{{count}} artículo",
+    "item_other": "{{count}} artículos",
+    "maxQuantity": "Cantidad máxima alcanzada para este producto",
+    "maxItems": "Máximo 20 productos distintos en el carrito"
+  },
+  "checkout": {
+    "title": "Finalizar compra",
+    "steps": {
+      "data": "Datos",
+      "payment": "Pago",
+      "confirmation": "Confirmación"
+    },
+    "form": {
+      "fullName": "Nombre completo",
+      "idNumber": "Cédula",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "country": "País",
+      "department": "Departamento",
+      "city": "Ciudad",
+      "address": "Dirección",
+      "neighborhood": "Barrio (opcional)",
+      "notes": "Notas (opcional)",
+      "notesPlaceholder": "Apartamento, instrucciones de entrega..."
+    },
+    "payment": {
+      "title": "Método de pago",
+      "cod": "Contra entrega (COD)",
+      "codDesc": "Paga al recibir tu pedido",
+      "wompi": "Wompi",
+      "wompiDesc": "PSE, Nequi o tarjeta",
+      "mercadopago": "MercadoPago",
+      "mercadopagoDesc": "Daviplata o tarjeta",
+      "codNotAvailable": "El pago contra entrega no está disponible para tu ciudad. Puedes pagar con Wompi o MercadoPago.",
+      "codMaxAmount": "Pago contra entrega disponible para pedidos menores a $500.000",
+      "verifying": "Verificando cobertura..."
+    },
+    "summary": {
+      "title": "Resumen del pedido",
+      "subtotal": "Subtotal",
+      "shipping": "Envío",
+      "shippingFree": "Gratis",
+      "total": "Total",
+      "estimatedDelivery": "Tiempo estimado: {{days}}"
+    },
+    "submit": "Confirmar pedido",
+    "submitting": "Procesando...",
+    "emptyCart": "Tu carrito está vacío. Agrega productos para continuar."
+  },
+  "orders": {
+    "status": {
+      "CREATED": "Pedido recibido",
+      "CONFIRMED": "Confirmado",
+      "PREPARING": "En preparación",
+      "SHIPPED": "Enviado",
+      "IN_TRANSIT": "En tránsito",
+      "DELIVERED": "Entregado",
+      "FAILED": "No entregado",
+      "RETURNED": "Devuelto",
+      "CANCELLED": "Cancelado"
+    },
+    "tracking": "Rastrear pedido",
+    "trackingNumber": "Número de guía",
+    "carrier": "Transportadora",
+    "estimatedDelivery": "Entrega estimada",
+    "trackingPending": "Número de guía pendiente — disponible cuando tu pedido sea enviado"
+  },
+  "confirmation": {
+    "title": "¡Pedido confirmado!",
+    "subtitle": "Hemos recibido tu pedido y pronto comenzaremos a prepararlo",
+    "orderCode": "Código de pedido",
+    "emailSent": "Te enviamos un email de confirmación a",
+    "trackOrder": "Rastrear pedido",
+    "continueShopping": "Seguir comprando",
+    "whatsappConsult": "Consultar por WhatsApp"
+  },
+  "errors": {
+    "required": "Este campo es obligatorio",
+    "emailInvalid": "El email no es válido",
+    "phoneTooShort": "El teléfono debe tener mínimo 10 dígitos",
+    "addressTooShort": "La dirección debe tener mínimo 10 caracteres",
+    "nameTooShort": "El nombre debe tener mínimo 3 caracteres",
+    "paymentRequired": "Selecciona un método de pago",
+    "codCoverage": "Verifica la cobertura COD para tu ciudad",
+    "productOutOfStock": "El producto \"{{name}}\" se agotó. Por favor retíralo del carrito para continuar.",
+    "paymentRejected": "Tu pago fue rechazado. Verifica los datos o intenta con otro método.",
+    "insufficientFunds": "Fondos insuficientes. Intenta con otro método de pago.",
+    "paymentTimeout": "El pago expiró. Por favor intenta de nuevo.",
+    "serverError": "Ocurrió un error. Por favor intenta de nuevo.",
+    "networkError": "Sin conexión. Verifica tu internet e intenta de nuevo."
+  },
+  "search": {
+    "placeholder": "Buscar productos...",
+    "noResults": "No encontramos resultados para \"{{query}}\"",
+    "noResultsDesc": "Intenta con otro término o explora nuestras categorías",
+    "viewCategories": "Ver categorías",
+    "result": "{{count}} resultado",
+    "result_other": "{{count}} resultados"
+  },
+  "home": {
+    "hero": {
+      "title": "Todo lo que necesitas",
+      "subtitle": "en un solo lugar",
+      "cta": "Ver productos",
+      "badge": "Envío gratis en Colombia"
+    },
+    "categories": "Explora nuestras categorías",
+    "featured": "Productos destacados",
+    "viewAll": "Ver todos"
+  },
+  "footer": {
+    "rights": "© {{year}} Novainvesa. Todos los derechos reservados.",
+    "contact": "Contacto",
+    "categories": "Categorías",
+    "policies": "Políticas",
+    "privacy": "Política de privacidad",
+    "terms": "Términos y condiciones",
+    "returns": "Política de devoluciones",
+    "followUs": "Síguenos"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar",
+    "back": "Volver",
+    "backToHome": "Volver al inicio",
+    "seeMore": "Ver más",
+    "seeLess": "Ver menos",
+    "viewDetails": "Ver detalles",
+    "close": "Cerrar",
+    "free": "Gratis",
+    "days": "días hábiles"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "desc": "La página que buscas no existe o fue movida",
+    "back": "Volver al inicio"
+  },
+  "whatsapp": {
+    "float": "Contactar por WhatsApp",
+    "consult": "Consultar por WhatsApp",
+    "orderConsult": "Consultar pedido {{orderId}}"
+  }
+}

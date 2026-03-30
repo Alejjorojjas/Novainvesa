@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "home": "Home",
+    "cart": "Cart",
+    "myAccount": "My account",
+    "login": "Log in",
+    "logout": "Log out",
+    "search": "Search products..."
+  },
+  "categories": {
+    "mascotas": "Pets",
+    "hogar": "Home",
+    "tecnologia": "Technology",
+    "belleza": "Beauty",
+    "fitness": "Fitness",
+    "all": "All categories"
+  },
+  "product": {
+    "addToCart": "Add to cart",
+    "buyNow": "Buy now",
+    "outOfStock": "Out of stock",
+    "sale": "SALE",
+    "notify": "Notify me when available",
+    "whatsappBuy": "Buy via WhatsApp",
+    "relatedProducts": "Related products",
+    "description": "Description",
+    "benefits": "Benefits",
+    "quantity": "Quantity",
+    "inCart": "In your cart",
+    "shipping": "Free shipping",
+    "guarantee": "Satisfaction guarantee",
+    "returns": "Easy returns"
+  },
+  "cart": {
+    "title": "My cart",
+    "empty": "Your cart is empty",
+    "emptyDesc": "Add products to start your order",
+    "viewProducts": "View products",
+    "continueShopping": "Continue shopping",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Go to checkout",
+    "item": "{{count}} item",
+    "item_other": "{{count}} items",
+    "maxQuantity": "Maximum quantity reached for this product",
+    "maxItems": "Maximum 20 different products in your cart"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "steps": {
+      "data": "Details",
+      "payment": "Payment",
+      "confirmation": "Confirmation"
+    },
+    "form": {
+      "fullName": "Full name",
+      "idNumber": "ID number",
+      "email": "Email address",
+      "phone": "Phone number",
+      "country": "Country",
+      "department": "State / Department",
+      "city": "City",
+      "address": "Address",
+      "neighborhood": "Neighborhood (optional)",
+      "notes": "Notes (optional)",
+      "notesPlaceholder": "Apartment, delivery instructions..."
+    },
+    "payment": {
+      "title": "Payment method",
+      "cod": "Cash on delivery (COD)",
+      "codDesc": "Pay when you receive your order",
+      "wompi": "Wompi",
+      "wompiDesc": "PSE, Nequi or card",
+      "mercadopago": "MercadoPago",
+      "mercadopagoDesc": "Daviplata or card",
+      "codNotAvailable": "Cash on delivery is not available for your city. You can pay with Wompi or MercadoPago.",
+      "codMaxAmount": "Cash on delivery available for orders under $500,000 COP",
+      "verifying": "Verifying coverage..."
+    },
+    "summary": {
+      "title": "Order summary",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "shippingFree": "Free",
+      "total": "Total",
+      "estimatedDelivery": "Estimated time: {{days}}"
+    },
+    "submit": "Place order",
+    "submitting": "Processing...",
+    "emptyCart": "Your cart is empty. Add products to continue."
+  },
+  "orders": {
+    "status": {
+      "CREATED": "Order received",
+      "CONFIRMED": "Confirmed",
+      "PREPARING": "Preparing",
+      "SHIPPED": "Shipped",
+      "IN_TRANSIT": "In transit",
+      "DELIVERED": "Delivered",
+      "FAILED": "Not delivered",
+      "RETURNED": "Returned",
+      "CANCELLED": "Cancelled"
+    },
+    "tracking": "Track order",
+    "trackingNumber": "Tracking number",
+    "carrier": "Carrier",
+    "estimatedDelivery": "Estimated delivery",
+    "trackingPending": "Tracking number pending — available once your order is shipped"
+  },
+  "confirmation": {
+    "title": "Order confirmed!",
+    "subtitle": "We received your order and will start preparing it shortly",
+    "orderCode": "Order code",
+    "emailSent": "We sent a confirmation email to",
+    "trackOrder": "Track order",
+    "continueShopping": "Continue shopping",
+    "whatsappConsult": "Contact via WhatsApp"
+  },
+  "errors": {
+    "required": "This field is required",
+    "emailInvalid": "Please enter a valid email",
+    "phoneTooShort": "Phone must have at least 10 digits",
+    "addressTooShort": "Address must have at least 10 characters",
+    "nameTooShort": "Name must have at least 3 characters",
+    "paymentRequired": "Please select a payment method",
+    "codCoverage": "Please verify COD coverage for your city",
+    "productOutOfStock": "The product \"{{name}}\" is out of stock. Please remove it from your cart to continue.",
+    "paymentRejected": "Your payment was rejected. Please check the details or try another method.",
+    "insufficientFunds": "Insufficient funds. Please try another payment method.",
+    "paymentTimeout": "Payment expired. Please try again.",
+    "serverError": "An error occurred. Please try again.",
+    "networkError": "No connection. Please check your internet and try again."
+  },
+  "search": {
+    "placeholder": "Search products...",
+    "noResults": "No results found for \"{{query}}\"",
+    "noResultsDesc": "Try a different term or explore our categories",
+    "viewCategories": "View categories",
+    "result": "{{count}} result",
+    "result_other": "{{count}} results"
+  },
+  "home": {
+    "hero": {
+      "title": "Everything you need",
+      "subtitle": "in one place",
+      "cta": "View products",
+      "badge": "Free shipping in Colombia"
+    },
+    "categories": "Explore our categories",
+    "featured": "Featured products",
+    "viewAll": "View all"
+  },
+  "footer": {
+    "rights": "© {{year}} Novainvesa. All rights reserved.",
+    "contact": "Contact",
+    "categories": "Categories",
+    "policies": "Policies",
+    "privacy": "Privacy policy",
+    "terms": "Terms and conditions",
+    "returns": "Returns policy",
+    "followUs": "Follow us"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "back": "Back",
+    "backToHome": "Back to home",
+    "seeMore": "See more",
+    "seeLess": "See less",
+    "viewDetails": "View details",
+    "close": "Close",
+    "free": "Free",
+    "days": "business days"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "desc": "The page you are looking for does not exist or has been moved",
+    "back": "Back to home"
+  },
+  "whatsapp": {
+    "float": "Contact via WhatsApp",
+    "consult": "Contact via WhatsApp",
+    "orderConsult": "Check order {{orderId}}"
+  }
+}

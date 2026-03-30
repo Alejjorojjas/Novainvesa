@@ -1,0 +1,187 @@
+{
+  "nav": {
+    "home": "Início",
+    "cart": "Carrinho",
+    "myAccount": "Minha conta",
+    "login": "Entrar",
+    "logout": "Sair",
+    "search": "Buscar produtos..."
+  },
+  "categories": {
+    "mascotas": "Animais de estimação",
+    "hogar": "Casa",
+    "tecnologia": "Tecnologia",
+    "belleza": "Beleza",
+    "fitness": "Fitness",
+    "all": "Todas as categorias"
+  },
+  "product": {
+    "addToCart": "Adicionar ao carrinho",
+    "buyNow": "Comprar agora",
+    "outOfStock": "Esgotado",
+    "sale": "OFERTA",
+    "notify": "Avisar quando disponível",
+    "whatsappBuy": "Comprar pelo WhatsApp",
+    "relatedProducts": "Produtos relacionados",
+    "description": "Descrição",
+    "benefits": "Benefícios",
+    "quantity": "Quantidade",
+    "inCart": "No seu carrinho",
+    "shipping": "Frete grátis",
+    "guarantee": "Garantia de satisfação",
+    "returns": "Devoluções fáceis"
+  },
+  "cart": {
+    "title": "Meu carrinho",
+    "empty": "Seu carrinho está vazio",
+    "emptyDesc": "Adicione produtos para começar seu pedido",
+    "viewProducts": "Ver produtos",
+    "continueShopping": "Continuar comprando",
+    "remove": "Remover",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Ir para o checkout",
+    "item": "{{count}} item",
+    "item_other": "{{count}} itens",
+    "maxQuantity": "Quantidade máxima atingida para este produto",
+    "maxItems": "Máximo de 20 produtos diferentes no carrinho"
+  },
+  "checkout": {
+    "title": "Finalizar compra",
+    "steps": {
+      "data": "Dados",
+      "payment": "Pagamento",
+      "confirmation": "Confirmação"
+    },
+    "form": {
+      "fullName": "Nome completo",
+      "idNumber": "CPF / Documento",
+      "email": "Endereço de e-mail",
+      "phone": "Telefone",
+      "country": "País",
+      "department": "Estado / Departamento",
+      "city": "Cidade",
+      "address": "Endereço",
+      "neighborhood": "Bairro (opcional)",
+      "notes": "Observações (opcional)",
+      "notesPlaceholder": "Apartamento, instruções de entrega..."
+    },
+    "payment": {
+      "title": "Método de pagamento",
+      "cod": "Pagamento na entrega (COD)",
+      "codDesc": "Pague ao receber o pedido",
+      "wompi": "Wompi",
+      "wompiDesc": "PSE, Nequi ou cartão",
+      "mercadopago": "MercadoPago",
+      "mercadopagoDesc": "Daviplata ou cartão",
+      "codNotAvailable": "O pagamento na entrega não está disponível para sua cidade. Você pode pagar com Wompi ou MercadoPago.",
+      "codMaxAmount": "Pagamento na entrega disponível para pedidos abaixo de $500.000 COP",
+      "verifying": "Verificando cobertura..."
+    },
+    "summary": {
+      "title": "Resumo do pedido",
+      "subtotal": "Subtotal",
+      "shipping": "Frete",
+      "shippingFree": "Grátis",
+      "total": "Total",
+      "estimatedDelivery": "Prazo estimado: {{days}}"
+    },
+    "submit": "Confirmar pedido",
+    "submitting": "Processando...",
+    "emptyCart": "Seu carrinho está vazio. Adicione produtos para continuar."
+  },
+  "orders": {
+    "status": {
+      "CREATED": "Pedido recebido",
+      "CONFIRMED": "Confirmado",
+      "PREPARING": "Em preparação",
+      "SHIPPED": "Enviado",
+      "IN_TRANSIT": "Em trânsito",
+      "DELIVERED": "Entregue",
+      "FAILED": "Não entregue",
+      "RETURNED": "Devolvido",
+      "CANCELLED": "Cancelado"
+    },
+    "tracking": "Rastrear pedido",
+    "trackingNumber": "Número de rastreamento",
+    "carrier": "Transportadora",
+    "estimatedDelivery": "Entrega estimada",
+    "trackingPending": "Número de rastreamento pendente — disponível quando seu pedido for enviado"
+  },
+  "confirmation": {
+    "title": "Pedido confirmado!",
+    "subtitle": "Recebemos seu pedido e logo começaremos a prepará-lo",
+    "orderCode": "Código do pedido",
+    "emailSent": "Enviamos um e-mail de confirmação para",
+    "trackOrder": "Rastrear pedido",
+    "continueShopping": "Continuar comprando",
+    "whatsappConsult": "Consultar pelo WhatsApp"
+  },
+  "errors": {
+    "required": "Este campo é obrigatório",
+    "emailInvalid": "Digite um e-mail válido",
+    "phoneTooShort": "O telefone deve ter pelo menos 10 dígitos",
+    "addressTooShort": "O endereço deve ter pelo menos 10 caracteres",
+    "nameTooShort": "O nome deve ter pelo menos 3 caracteres",
+    "paymentRequired": "Selecione um método de pagamento",
+    "codCoverage": "Verifique a cobertura COD para sua cidade",
+    "productOutOfStock": "O produto \"{{name}}\" está esgotado. Por favor, remova-o do carrinho para continuar.",
+    "paymentRejected": "Seu pagamento foi recusado. Verifique os dados ou tente outro método.",
+    "insufficientFunds": "Saldo insuficiente. Tente outro método de pagamento.",
+    "paymentTimeout": "O pagamento expirou. Por favor, tente novamente.",
+    "serverError": "Ocorreu um erro. Por favor, tente novamente.",
+    "networkError": "Sem conexão. Verifique sua internet e tente novamente."
+  },
+  "search": {
+    "placeholder": "Buscar produtos...",
+    "noResults": "Não encontramos resultados para \"{{query}}\"",
+    "noResultsDesc": "Tente outro termo ou explore nossas categorias",
+    "viewCategories": "Ver categorias",
+    "result": "{{count}} resultado",
+    "result_other": "{{count}} resultados"
+  },
+  "home": {
+    "hero": {
+      "title": "Tudo o que você precisa",
+      "subtitle": "em um só lugar",
+      "cta": "Ver produtos",
+      "badge": "Frete grátis na Colômbia"
+    },
+    "categories": "Explore nossas categorias",
+    "featured": "Produtos em destaque",
+    "viewAll": "Ver todos"
+  },
+  "footer": {
+    "rights": "© {{year}} Novainvesa. Todos os direitos reservados.",
+    "contact": "Contato",
+    "categories": "Categorias",
+    "policies": "Políticas",
+    "privacy": "Política de privacidade",
+    "terms": "Termos e condições",
+    "returns": "Política de devoluções",
+    "followUs": "Siga-nos"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "retry": "Tentar novamente",
+    "back": "Voltar",
+    "backToHome": "Voltar ao início",
+    "seeMore": "Ver mais",
+    "seeLess": "Ver menos",
+    "viewDetails": "Ver detalhes",
+    "close": "Fechar",
+    "free": "Grátis",
+    "days": "dias úteis"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "desc": "A página que você está procurando não existe ou foi movida",
+    "back": "Voltar ao início"
+  },
+  "whatsapp": {
+    "float": "Contatar pelo WhatsApp",
+    "consult": "Consultar pelo WhatsApp",
+    "orderConsult": "Consultar pedido {{orderId}}"
+  }
+}
