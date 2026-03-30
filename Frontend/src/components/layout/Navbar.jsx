@@ -10,20 +10,18 @@ export default function Navbar() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
-  const { getItemCount } = useCart()
+  const { getItemCount, openCart } = useCart()
 
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
   const searchRef = useRef(null)
 
-  // Cerrar menú mobile al cambiar de ruta
   useEffect(() => {
     setMobileOpen(false)
     setSearchOpen(false)
   }, [location.pathname])
 
-  // Enfocar input al abrir búsqueda mobile
   useEffect(() => {
     if (searchOpen) searchRef.current?.focus()
   }, [searchOpen])
@@ -43,15 +41,13 @@ export default function Navbar() {
     <nav className="bg-white border-b border-neutral-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8">
 
-        {/* Fila principal */}
         <div className="flex items-center justify-between h-16 gap-4">
 
-          {/* Logo */}
           <Link to="/" className="font-display font-bold text-xl text-[#2563EB] shrink-0">
             Novainvesa
           </Link>
 
-          {/* Búsqueda desktop */}
+          {/* Busqueda desktop */}
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 pointer-events-none" />
@@ -65,10 +61,7 @@ export default function Navbar() {
             </div>
           </form>
 
-          {/* Acciones */}
           <div className="flex items-center gap-1 shrink-0">
-
-            {/* Búsqueda mobile */}
             <button
               onClick={() => setSearchOpen(o => !o)}
               aria-label={t('nav.search')}
@@ -79,7 +72,6 @@ export default function Navbar() {
 
             <LanguageSelector />
 
-            {/* Mi cuenta */}
             <Link
               to="/cuenta"
               aria-label={t('nav.myAccount')}
@@ -88,9 +80,9 @@ export default function Navbar() {
               <User className="w-5 h-5" />
             </Link>
 
-            {/* Carrito */}
-            <Link
-              to="/carrito"
+            {/* Carrito — abre el drawer en lugar de navegar */}
+            <button
+              onClick={openCart}
               aria-label={t('nav.cart')}
               className="relative p-2 text-neutral-600 hover:text-neutral-900 rounded-lg hover:bg-neutral-100 transition-colors duration-200"
             >
@@ -100,12 +92,11 @@ export default function Navbar() {
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
-            </Link>
+            </button>
 
-            {/* Hamburguesa */}
             <button
               onClick={() => setMobileOpen(o => !o)}
-              aria-label="Menú"
+              aria-label="Menu"
               aria-expanded={mobileOpen}
               className="md:hidden p-2 text-neutral-600 hover:text-neutral-900 rounded-lg hover:bg-neutral-100 transition-colors duration-200"
             >
@@ -114,7 +105,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Búsqueda mobile expandible */}
+        {/* Busqueda mobile expandible */}
         {searchOpen && (
           <div className="md:hidden pb-3">
             <form onSubmit={handleSearch}>
@@ -133,7 +124,7 @@ export default function Navbar() {
           </div>
         )}
 
-        {/* Categorías barra secondary — solo desktop */}
+        {/* Categorias — desktop */}
         <div className="hidden md:flex items-center gap-5 py-2 border-t border-neutral-100">
           {categories.map(cat => (
             <Link
@@ -147,7 +138,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Menú mobile desplegable */}
+      {/* Menu mobile */}
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-neutral-100 shadow-lg">
           <div className="max-w-[1280px] mx-auto px-4 py-4 space-y-1">

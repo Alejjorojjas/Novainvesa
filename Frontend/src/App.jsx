@@ -4,6 +4,7 @@ import { LanguageProvider } from './context/LanguageContext'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import WhatsAppFloat from './components/common/WhatsAppFloat'
+import CartDrawer from './components/cart/CartDrawer'
 import Home from './pages/Home'
 import CategoryPage from './pages/CategoryPage'
 import ProductPage from './pages/ProductPage'
@@ -37,6 +38,7 @@ function AppLayout() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <CartDrawer />
     </div>
   )
 }
