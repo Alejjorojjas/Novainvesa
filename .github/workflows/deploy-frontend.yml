@@ -1,46 +1,55 @@
-name: Deploy Frontend a Hostinger
+name: Deploy Frontend → Hostinger
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
-      - "Frontend/**"
+      - 'Frontend/**'
+  workflow_dispatch: # permite disparar manualmente desde GitHub Actions
 
 jobs:
   build-and-deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - name: Clonar repositorio
+      - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: "npm"
+          node-version: '20'
+          cache: 'npm'
           cache-dependency-path: Frontend/package-lock.json
 
       - name: Instalar dependencias
         working-directory: Frontend
         run: npm ci
 
-      - name: Compilar frontend
+      - name: Build de producción
         working-directory: Frontend
-        run: npm run build
         env:
-          VITE_API_URL: https://api-novainvesa.onrender.com
-          VITE_META_PIXEL_ID: ${{ secrets.META_PIXEL_ID }}
-          VITE_GA4_ID: ${{ secrets.GA4_ID }}
-          VITE_WHATSAPP_NUMBER: ${{ secrets.WHATSAPP_NUMBER }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_INTERNAL_API_KEY: ${{ secrets.VITE_INTERNAL_API_KEY }}
+          VITE_META_PIXEL_ID: ${{ secrets.VITE_META_PIXEL_ID }}
+        run: npm run build
 
-      - name: Subir a Hostinger via FTP
+      - name: Deploy a Hostinger vía FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
-          local-dir: ./Frontend/dist/
+          local-dir: Frontend/dist/
           server-dir: /public_html/
+          # false = actualiza solo archivos cambiados (más rápido y seguro)
           dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .htaccess
