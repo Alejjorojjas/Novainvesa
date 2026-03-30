@@ -1,4 +1,4 @@
-﻿import { BrowserRouter, Routes, Route } from 'react-router-dom'
+﻿import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import { LanguageProvider } from './context/LanguageContext'
 import Navbar from './components/layout/Navbar'
@@ -16,8 +16,23 @@ import AboutPage from './pages/AboutPage'
 import PrivacyPage from './pages/PrivacyPage'
 import TermsPage from './pages/TermsPage'
 import NotFoundPage from './pages/NotFoundPage'
+import AccountPage from './pages/AccountPage'
+import OrdersPage from './pages/OrdersPage'
+import WishlistPage from './pages/WishlistPage'
+import AdminPage from './pages/AdminPage'
 
 function AppLayout() {
+  const { pathname } = useLocation()
+  const isAdmin = pathname.startsWith('/admin')
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route path="/admin" element={<AdminPage />} />
+      </Routes>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col">
       <Navbar />
@@ -33,6 +48,9 @@ function AppLayout() {
           <Route path="/sobre-nosotros" element={<AboutPage />} />
           <Route path="/politica-privacidad" element={<PrivacyPage />} />
           <Route path="/terminos" element={<TermsPage />} />
+          <Route path="/cuenta" element={<AccountPage />} />
+          <Route path="/pedidos" element={<OrdersPage />} />
+          <Route path="/favoritos" element={<WishlistPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
