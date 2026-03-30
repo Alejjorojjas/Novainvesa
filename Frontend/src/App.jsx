@@ -1,5 +1,9 @@
 ﻿import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
+import { LanguageProvider } from './context/LanguageContext'
+import Navbar from './components/layout/Navbar'
+import Footer from './components/layout/Footer'
+import WhatsAppFloat from './components/common/WhatsAppFloat'
 import Home from './pages/Home'
 import CategoryPage from './pages/CategoryPage'
 import ProductPage from './pages/ProductPage'
@@ -12,10 +16,11 @@ import PrivacyPage from './pages/PrivacyPage'
 import TermsPage from './pages/TermsPage'
 import NotFoundPage from './pages/NotFoundPage'
 
-function App() {
+function AppLayout() {
   return (
-    <CartProvider>
-      <BrowserRouter>
+    <div className="min-h-screen bg-neutral-50 flex flex-col">
+      <Navbar />
+      <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/categoria/:slug" element={<CategoryPage />} />
@@ -29,8 +34,22 @@ function App() {
           <Route path="/terminos" element={<TermsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </BrowserRouter>
-    </CartProvider>
+      </main>
+      <Footer />
+      <WhatsAppFloat />
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <AppLayout />
+        </BrowserRouter>
+      </CartProvider>
+    </LanguageProvider>
   )
 }
 
