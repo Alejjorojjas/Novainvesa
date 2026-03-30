@@ -1,5 +1,37 @@
 import api from '../services/api'
 
+// Inyecta el script del Meta Pixel e inicializa con el ID de la variable de entorno.
+// Debe llamarse una sola vez al arrancar la aplicación.
+export function initPixel() {
+  const pixelId = import.meta.env.VITE_META_PIXEL_ID
+  if (!pixelId || typeof window === 'undefined') return
+
+  // Evitar doble inicialización
+  if (window._novaPixelInit) return
+  window._novaPixelInit = true
+
+  // Snippet oficial de Meta Pixel (versión programática)
+  ;(function (f, b, e, v, n, t, s) {
+    if (f.fbq) return
+    n = f.fbq = function () {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+    }
+    if (!f._fbq) f._fbq = n
+    n.push = n
+    n.loaded = true
+    n.version = '2.0'
+    n.queue = []
+    t = b.createElement(e)
+    t.async = true
+    t.src = v
+    s = b.getElementsByTagName(e)[0]
+    s.parentNode.insertBefore(t, s)
+  })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+
+  window.fbq('init', pixelId)
+  window.fbq('track', 'PageView')
+}
+
 // Llama a fbq() del Pixel del navegador si está disponible
 function fireClientPixel(eventName, params = {}) {
   if (typeof window !== 'undefined' && typeof window.fbq === 'function') {

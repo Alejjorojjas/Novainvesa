@@ -20,7 +20,7 @@ export default function SearchPage() {
     : 'Buscar productos — Novainvesa'
 
   useEffect(() => {
-    if (query) trackSearch(query)
+    if (query) trackSearch({ query })
   }, [query])
 
   function handleSubmit(e) {
