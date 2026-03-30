@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /d/OneDrive/Documentos/Repositorios GitHub/Dropshipping/Backend)",
+      "Bash(find /d/OneDrive/Documentos/Repositorios GitHub/Dropshipping/Frontend/src/components -type f -name *.jsx)"
+    ]
+  }
+}
