@@ -17,6 +17,7 @@ const adminRoutes     = require('./src/routes/admin.routes')
 const pixelRoutes     = require('./src/routes/pixel.routes')
 const emailRoutes     = require('./src/routes/email.routes')
 const coverageRoutes  = require('./src/routes/coverage.routes')
+const dropiRoutes = require('./src/routes/dropi.routes')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -27,6 +28,7 @@ app.use(cors({
   origin: [process.env.FRONTEND_URL, 'http://localhost:5173'],
   credentials: true
 }))
+
 
 // Rate limiting
 const limiter = rateLimit({
