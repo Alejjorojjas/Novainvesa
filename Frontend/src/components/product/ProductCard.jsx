@@ -76,7 +76,7 @@ export default function ProductCard({ product }) {
             w-full flex items-center justify-center gap-2
             text-sm font-semibold py-2 rounded-xl
             transition-colors duration-200
-            ${product.inStock
+            ${!!product.inStock
               ? inCart
                 ? 'bg-green-100 text-green-700 hover:bg-green-200'
                 : 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white'

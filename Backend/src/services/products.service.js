@@ -71,8 +71,13 @@ async function searchProducts(query, limit = 10) {
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 function parseJsonFields(row) {
+  const inStock = row.in_stock === 1 || row.in_stock === true
+  const featured = row.featured === 1 || row.featured === true
   return {
     ...row,
+    in_stock: inStock,
+    inStock,
+    featured,
     images: parseJson(row.images, []),
     benefits: parseJson(row.benefits, []),
   }

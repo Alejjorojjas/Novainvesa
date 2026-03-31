@@ -58,7 +58,7 @@ export default function ProductDetail({ product }) {
       )}
 
       {/* Selector de cantidad */}
-      {product.inStock && (
+      {!!product.inStock && (
         <div className="flex items-center gap-3">
           <span className="text-sm font-medium text-neutral-700">{t('product.quantity')}</span>
           <div className="flex items-center border border-neutral-200 rounded-xl overflow-hidden">
@@ -97,7 +97,7 @@ export default function ProductDetail({ product }) {
             w-full flex items-center justify-center gap-2
             font-bold px-6 py-4 rounded-xl text-base
             transition-all duration-200
-            ${product.inStock
+            ${!!product.inStock
               ? inCart
                 ? 'bg-green-500 hover:bg-green-600 text-white'
                 : 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white shadow-md hover:shadow-lg'
