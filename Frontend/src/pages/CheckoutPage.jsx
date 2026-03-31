@@ -7,6 +7,7 @@ import { usePixel } from '../hooks/usePixel'
 import { formatPrice } from '../utils/formatters'
 import { validateField, validateCheckoutForm, isFormValid } from '../utils/validators'
 import CheckoutForm from '../components/checkout/CheckoutForm'
+import PaymentSelector from '../components/checkout/PaymentSelector'
 import api from '../services/api'
 
 const INITIAL_FORM = {
@@ -127,14 +128,23 @@ export default function CheckoutPage() {
 
       <form onSubmit={handleSubmit} noValidate>
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Formulario */}
-          <div className="flex-1 min-w-0">
+          {/* Formulario + Pago */}
+          <div className="flex-1 min-w-0 flex flex-col gap-6">
             <CheckoutForm
               formData={formData}
               errors={errors}
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            <PaymentSelector
+              paymentMethod={formData.paymentMethod}
+              onChange={value => handleChange('paymentMethod', value)}
+              city={formData.city}
+              total={total}
+            />
+            {errors.paymentMethod && (
+              <p className="text-sm text-red-500 -mt-4">{t(errors.paymentMethod)}</p>
+            )}
           </div>
 
           {/* Resumen del pedido */}
