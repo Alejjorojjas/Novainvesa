@@ -86,6 +86,10 @@
       "total": "Total",
       "estimatedDelivery": "Tiempo estimado: {{days}}"
     },
+    "summary": "Resumen del pedido",
+    "total": "Total",
+    "confirm": "Confirmar pedido",
+    "processing": "Procesando...",
     "submit": "Confirmar pedido",
     "submitting": "Procesando...",
     "emptyCart": "Tu carrito está vacío. Agrega productos para continuar."

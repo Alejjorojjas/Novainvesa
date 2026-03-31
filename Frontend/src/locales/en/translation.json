@@ -86,6 +86,10 @@
       "total": "Total",
       "estimatedDelivery": "Estimated time: {{days}}"
     },
+    "summary": "Order summary",
+    "total": "Total",
+    "confirm": "Place order",
+    "processing": "Processing...",
     "submit": "Place order",
     "submitting": "Processing...",
     "emptyCart": "Your cart is empty. Add products to continue."
