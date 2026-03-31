@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator')
-const dropiService = require('../services/dropi.service')
+const productsService = require('../services/products.service')
 
 // GET /api/v1/products
 async function getProducts(req, res) {
@@ -14,7 +14,7 @@ async function getProducts(req, res) {
   const { category, limit, page, featured } = req.query
 
   try {
-    const data = await dropiService.getProducts({
+    const data = await productsService.getProducts({
       category,
       limit,
       page,
@@ -23,10 +23,10 @@ async function getProducts(req, res) {
 
     return res.json({ success: true, data })
   } catch (err) {
-    console.error('[getProducts] Error Dropi:', err.message)
+    console.error('[getProducts] Error DB:', err.message)
     return res.status(500).json({
       success: false,
-      error: { code: 'DROPI_ERROR', message: 'Error al obtener los productos' },
+      error: { code: 'DB_ERROR', message: 'Error al obtener los productos' },
     })
   }
 }
@@ -44,13 +44,13 @@ async function searchProducts(req, res) {
   const { q, limit } = req.query
 
   try {
-    const data = await dropiService.searchProducts(q, limit)
+    const data = await productsService.searchProducts(q, limit)
     return res.json({ success: true, data })
   } catch (err) {
-    console.error('[searchProducts] Error Dropi:', err.message)
+    console.error('[searchProducts] Error DB:', err.message)
     return res.status(500).json({
       success: false,
-      error: { code: 'DROPI_ERROR', message: 'Error al buscar productos' },
+      error: { code: 'DB_ERROR', message: 'Error al buscar productos' },
     })
   }
 }
@@ -60,7 +60,7 @@ async function getProductById(req, res) {
   const { id } = req.params
 
   try {
-    const product = await dropiService.getProductById(id)
+    const product = await productsService.getProductById(id)
 
     if (!product) {
       return res.status(404).json({
@@ -74,20 +74,10 @@ async function getProductById(req, res) {
 
     return res.json({ success: true, data: { product } })
   } catch (err) {
-    if (err.response?.status === 404) {
-      return res.status(404).json({
-        success: false,
-        error: {
-          code: 'PRODUCT_NOT_FOUND',
-          message: 'El producto no existe o no está disponible',
-        },
-      })
-    }
-
-    console.error('[getProductById] Error Dropi:', err.message)
+    console.error('[getProductById] Error DB:', err.message)
     return res.status(500).json({
       success: false,
-      error: { code: 'DROPI_ERROR', message: 'Error al obtener el producto' },
+      error: { code: 'DB_ERROR', message: 'Error al obtener el producto' },
     })
   }
 }
