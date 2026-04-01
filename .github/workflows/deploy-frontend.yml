@@ -49,5 +49,9 @@ jobs:
           local-dir: ./Frontend/dist/
           server-dir: /public_html/
           dangerous-clean-slate: false
-          timeout: 60000
-          log-level: verbose
+          timeout: 120000
+          log-level: minimal
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
