@@ -6,13 +6,4 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' }
 })
 
-// Adjunta x-api-key a todas las peticiones internas
-api.interceptors.request.use(config => {
-  const apiKey = import.meta.env.VITE_INTERNAL_API_KEY
-  if (apiKey) {
-    config.headers['x-api-key'] = apiKey
-  }
-  return config
-})
-
 export default api

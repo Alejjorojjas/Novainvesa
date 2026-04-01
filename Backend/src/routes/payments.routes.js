@@ -1,12 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const { createWompiPayment, createMercadoPagoPayment } = require('../controllers/payments.controller')
-const { verifyApiKey } = require('../middlewares/auth.middleware')
 
 // POST /api/v1/payments/wompi/create
-router.post('/wompi/create', verifyApiKey, createWompiPayment)
+router.post('/wompi/create', createWompiPayment)
 
 // POST /api/v1/payments/mercadopago/create
-router.post('/mercadopago/create', verifyApiKey, createMercadoPagoPayment)
+router.post('/mercadopago/create', createMercadoPagoPayment)
 
 module.exports = router

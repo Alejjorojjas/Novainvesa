@@ -42,20 +42,14 @@ function fireClientPixel(eventName, params = {}) {
 // Envía el evento al backend (Meta Conversions API server-side)
 async function fireServerCapi(eventName, userData = {}, customData = {}, eventSourceUrl = '') {
   try {
-    await api.post(
-      '/api/v1/pixel/event',
-      {
-        eventName,
-        eventTime: Math.floor(Date.now() / 1000),
-        userData,
-        customData,
-        eventSourceUrl: eventSourceUrl || window.location.href,
-        actionSource: 'website',
-      },
-      {
-        headers: { 'x-api-key': import.meta.env.VITE_INTERNAL_API_KEY },
-      }
-    )
+    await api.post('/api/v1/pixel/event', {
+      eventName,
+      eventTime: Math.floor(Date.now() / 1000),
+      userData,
+      customData,
+      eventSourceUrl: eventSourceUrl || window.location.href,
+      actionSource: 'website',
+    })
   } catch {
     // El fallo de CAPI no debe interrumpir el flujo del usuario
   }

@@ -16,9 +16,6 @@ const INITIAL_FORM = {
   notes: '', paymentMethod: '', codCoverageVerified: false,
 }
 
-// TODO: eliminar tras verificar producción
-console.log('[CheckoutPage] VITE_INTERNAL_API_KEY presente:', !!import.meta.env.VITE_INTERNAL_API_KEY)
-
 export default function CheckoutPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()

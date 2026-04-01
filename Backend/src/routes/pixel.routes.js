@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const { verifyApiKey } = require('../middlewares/auth.middleware')
 const pixelService = require('../services/pixel.service')
 const logger = require('../utils/logger')
 
@@ -8,7 +7,7 @@ const logger = require('../utils/logger')
 const VALID_EVENTS = ['PageView', 'ViewContent', 'AddToCart', 'InitiateCheckout', 'Purchase', 'Search', 'Contact']
 
 // POST /api/v1/pixel/event
-router.post('/event', verifyApiKey, async (req, res) => {
+router.post('/event', async (req, res) => {
   const { eventName, eventTime, userData, customData, eventSourceUrl, actionSource } = req.body || {}
 
   if (!eventName || !VALID_EVENTS.includes(eventName)) {
