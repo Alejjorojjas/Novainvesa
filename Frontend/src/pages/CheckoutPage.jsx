@@ -108,16 +108,16 @@ export default function CheckoutPage() {
       }
 
       const { data } = await api.post('/api/v1/orders', orderPayload)
-      const orderId = data?.data?.order?.id
+      const order = data?.data?.order
 
       try {
-        pixel.trackPurchase(orderId, items, total)
+        pixel.trackPurchase(order?.id, items, total)
       } catch {
         // el pixel no debe bloquear la confirmación
       }
 
       clearCart()
-      navigate(`/confirmacion/${orderId}`)
+      navigate('/confirmacion', { state: { order } })
     } catch (err) {
       setSubmitError(
         err.response?.data?.error?.message || t('errors.orderFailed')
