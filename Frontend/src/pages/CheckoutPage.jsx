@@ -158,7 +158,7 @@ export default function CheckoutPage() {
           <aside className="w-full lg:w-80 shrink-0">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 sticky top-24">
               <h2 className="font-display font-semibold text-lg text-neutral-900 dark:text-white mb-4">
-                {t('checkout.summary')}
+                {t('checkout.summary.title')}
               </h2>
 
               <ul className="space-y-3 mb-4">

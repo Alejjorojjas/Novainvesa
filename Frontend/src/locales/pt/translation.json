@@ -86,7 +86,7 @@
       "total": "Total",
       "estimatedDelivery": "Prazo estimado: {{days}}"
     },
-    "summary": "Resumo do pedido",
+
     "total": "Total",
     "confirm": "Confirmar pedido",
     "processing": "Processando...",

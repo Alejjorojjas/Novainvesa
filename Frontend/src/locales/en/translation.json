@@ -86,7 +86,7 @@
       "total": "Total",
       "estimatedDelivery": "Estimated time: {{days}}"
     },
-    "summary": "Order summary",
+
     "total": "Total",
     "confirm": "Place order",
     "processing": "Processing...",
