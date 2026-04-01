@@ -35,7 +35,7 @@ export default function ConfirmationPage() {
   return (
     <>
       <SEOHead title={t('confirmation.title')} />
-      <div className="max-w-[600px] mx-auto px-4 md:px-6 py-12">
+      <div className="max-w-[600px] mx-auto px-4 md:px-6 py-12 dark:bg-gray-900">
 
         <div className="flex justify-center mb-6">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
@@ -43,10 +43,10 @@ export default function ConfirmationPage() {
           </div>
         </div>
 
-        <h1 className="font-display font-bold text-2xl md:text-3xl text-neutral-900 text-center mb-2">
+        <h1 className="font-display font-bold text-2xl md:text-3xl text-neutral-900 dark:text-white text-center mb-2">
           {t('confirmation.title')}
         </h1>
-        <p className="text-neutral-500 text-center mb-8">{t('confirmation.subtitle')}</p>
+        <p className="text-neutral-500 dark:text-gray-400 text-center mb-8">{t('confirmation.subtitle')}</p>
 
         {orderId && (
           <div className="bg-blue-50 border border-blue-200 rounded-2xl px-5 py-4 text-center mb-6">
@@ -56,12 +56,12 @@ export default function ConfirmationPage() {
         )}
 
         {order && (
-          <div className="bg-white rounded-2xl shadow-sm p-5 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 mb-6">
             {order.items?.length > 0 && (
-              <div className="space-y-3 mb-4 pb-4 border-b border-neutral-100">
+              <div className="space-y-3 mb-4 pb-4 border-b border-neutral-100 dark:border-gray-700">
                 {order.items.map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <div className="w-12 h-12 shrink-0 rounded-xl overflow-hidden bg-neutral-100">
+                    <div className="w-12 h-12 shrink-0 rounded-xl overflow-hidden bg-neutral-100 dark:bg-gray-700">
                       <img
                         src={item.image || '/placeholder.jpg'}
                         alt={item.name}
@@ -70,10 +70,10 @@ export default function ConfirmationPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-neutral-800 line-clamp-1">{item.name}</p>
-                      <p className="text-xs text-neutral-500">x{item.quantity || 1}</p>
+                      <p className="text-sm font-medium text-neutral-800 dark:text-gray-100 line-clamp-1">{item.name}</p>
+                      <p className="text-xs text-neutral-500 dark:text-gray-400">x{item.quantity || 1}</p>
                     </div>
-                    <span className="text-sm font-semibold text-neutral-900 shrink-0">
+                    <span className="text-sm font-semibold text-neutral-900 dark:text-white shrink-0">
                       {formatPrice((item.unitPrice || item.price || 0) * (item.quantity || 1))}
                     </span>
                   </div>
@@ -82,13 +82,13 @@ export default function ConfirmationPage() {
             )}
             {order.total > 0 && (
               <div className="flex justify-between items-center mb-4">
-                <span className="font-semibold text-neutral-700">{t('cart.total')}</span>
-                <span className="font-bold text-xl text-neutral-900">{formatPrice(order.total)}</span>
+                <span className="font-semibold text-neutral-700 dark:text-gray-200">{t('cart.total')}</span>
+                <span className="font-bold text-xl text-neutral-900 dark:text-white">{formatPrice(order.total)}</span>
               </div>
             )}
-            <div className="flex items-center gap-2 bg-neutral-50 rounded-xl px-4 py-3">
+            <div className="flex items-center gap-2 bg-neutral-50 dark:bg-gray-700 rounded-xl px-4 py-3">
               <Package className="w-5 h-5 text-blue-600 shrink-0" />
-              <p className="text-sm text-neutral-600">
+              <p className="text-sm text-neutral-600 dark:text-gray-300">
                 {t('checkout.summary.estimatedDelivery', { days: deliveryDays + ' ' + t('common.days') })}
               </p>
             </div>
@@ -96,7 +96,7 @@ export default function ConfirmationPage() {
         )}
 
         {order?.customer?.email && (
-          <p className="text-center text-sm text-neutral-500 mb-8">
+          <p className="text-center text-sm text-neutral-500 dark:text-gray-400 mb-8">
             {t('confirmation.emailSent')}{' '}
             <span className="font-medium text-neutral-700">{order.customer.email}</span>
           </p>
@@ -122,7 +122,7 @@ export default function ConfirmationPage() {
           </a>
           <Link
             to="/"
-            className="w-full flex items-center justify-center gap-2 border border-neutral-200 hover:bg-neutral-50 text-neutral-700 font-semibold py-3.5 rounded-xl transition-colors duration-200"
+            className="w-full flex items-center justify-center gap-2 border border-neutral-200 dark:border-gray-600 hover:bg-neutral-50 dark:hover:bg-gray-800 text-neutral-700 dark:text-gray-200 font-semibold py-3.5 rounded-xl transition-colors duration-200"
           >
             <Home className="w-5 h-5" />
             {t('confirmation.continueShopping')}

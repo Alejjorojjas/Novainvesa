@@ -24,10 +24,10 @@ export default function ProductCard({ product }) {
   return (
     <Link
       to={`/producto/${product.id}`}
-      className="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col"
+      className="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col"
     >
       {/* Imagen */}
-      <div className="relative aspect-square overflow-hidden bg-neutral-100">
+      <div className="relative aspect-square overflow-hidden bg-neutral-100 dark:bg-gray-700">
         <img
           src={product.images?.[0] || '/placeholder.jpg'}
           alt={product.name}
@@ -51,18 +51,18 @@ export default function ProductCard({ product }) {
 
       {/* Info */}
       <div className="p-3 sm:p-4 flex flex-col flex-1">
-        <p className="text-neutral-500 text-xs mb-1 truncate">{product.category}</p>
-        <h3 className="text-neutral-800 font-semibold text-sm sm:text-base leading-tight line-clamp-2 mb-2 flex-1">
+        <p className="text-neutral-500 dark:text-gray-400 text-xs mb-1 truncate">{product.category}</p>
+        <h3 className="text-neutral-800 dark:text-white font-semibold text-sm sm:text-base leading-tight line-clamp-2 mb-2 flex-1">
           {product.name}
         </h3>
 
         {/* Precios */}
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-neutral-900 font-bold text-base sm:text-lg">
+          <span className="text-neutral-900 dark:text-white font-bold text-base sm:text-lg">
             {formatPrice(product.price)}
           </span>
           {hasOffer && (
-            <span className="text-neutral-400 text-sm line-through">
+            <span className="text-neutral-400 dark:text-gray-500 text-sm line-through">
               {formatPrice(product.compareAtPrice)}
             </span>
           )}
@@ -78,9 +78,9 @@ export default function ProductCard({ product }) {
             transition-colors duration-200
             ${!!product.inStock
               ? inCart
-                ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                ? 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50'
                 : 'bg-[#2563EB] hover:bg-[#1D4ED8] text-white'
-              : 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
+              : 'bg-neutral-100 dark:bg-gray-700 text-neutral-400 dark:text-gray-500 cursor-not-allowed'
             }
           `}
         >

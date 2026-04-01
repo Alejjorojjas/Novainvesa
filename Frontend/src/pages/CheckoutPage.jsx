@@ -128,8 +128,8 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="font-display font-semibold text-2xl text-neutral-900 mb-6">
+    <div className="max-w-5xl mx-auto px-4 py-8 dark:bg-gray-900">
+      <h1 className="font-display font-semibold text-2xl text-neutral-900 dark:text-white mb-6">
         {t('checkout.title')}
       </h1>
 
@@ -156,8 +156,8 @@ export default function CheckoutPage() {
 
           {/* Resumen del pedido */}
           <aside className="w-full lg:w-80 shrink-0">
-            <div className="bg-white rounded-2xl shadow-sm p-5 sticky top-24">
-              <h2 className="font-display font-semibold text-lg text-neutral-900 mb-4">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 sticky top-24">
+              <h2 className="font-display font-semibold text-lg text-neutral-900 dark:text-white mb-4">
                 {t('checkout.summary')}
               </h2>
 
@@ -173,19 +173,19 @@ export default function CheckoutPage() {
                       />
                     )}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-neutral-800 truncate">{item.name}</p>
-                      <p className="text-xs text-neutral-500">× {item.quantity}</p>
+                      <p className="text-sm font-medium text-neutral-800 dark:text-gray-100 truncate">{item.name}</p>
+                      <p className="text-xs text-neutral-500 dark:text-gray-400">× {item.quantity}</p>
                     </div>
-                    <span className="text-sm font-semibold text-neutral-900 shrink-0">
+                    <span className="text-sm font-semibold text-neutral-900 dark:text-white shrink-0">
                       {formatPrice(item.price * item.quantity)}
                     </span>
                   </li>
                 ))}
               </ul>
 
-              <div className="border-t border-neutral-100 pt-3 flex justify-between items-center mb-5">
-                <span className="font-semibold text-neutral-800">{t('checkout.total')}</span>
-                <span className="font-bold text-lg text-neutral-900">{formatPrice(total)}</span>
+              <div className="border-t border-neutral-100 dark:border-gray-700 pt-3 flex justify-between items-center mb-5">
+                <span className="font-semibold text-neutral-800 dark:text-gray-200">{t('checkout.total')}</span>
+                <span className="font-bold text-lg text-neutral-900 dark:text-white">{formatPrice(total)}</span>
               </div>
 
               {submitError && (

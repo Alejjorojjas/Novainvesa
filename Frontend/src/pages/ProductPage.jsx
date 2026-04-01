@@ -60,9 +60,9 @@ export default function ProductPage() {
         image={product.images?.[0]}
       />
 
-      <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-6">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-6 dark:bg-gray-900">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-sm text-neutral-500 mb-6">
+        <nav className="flex items-center gap-1.5 text-sm text-neutral-500 dark:text-gray-400 mb-6">
           <Link to="/" className="hover:text-[#2563EB] transition-colors duration-200">
             {t('nav.home')}
           </Link>
@@ -78,7 +78,7 @@ export default function ProductPage() {
             </>
           )}
           <ChevronRight className="w-4 h-4" />
-          <span className="text-neutral-800 font-medium line-clamp-1">{product.name}</span>
+          <span className="text-neutral-800 dark:text-gray-100 font-medium line-clamp-1">{product.name}</span>
         </nav>
 
         {/* Galería + Detalle */}
@@ -89,23 +89,23 @@ export default function ProductPage() {
 
         {/* Descripción y beneficios */}
         {(product.description || product.benefits?.length > 0) && (
-          <div className="bg-white rounded-2xl p-6 mb-12 shadow-sm">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 mb-12 shadow-sm">
             {product.description && (
               <div className="mb-6">
-                <h2 className="font-display font-semibold text-lg text-neutral-900 mb-3">
+                <h2 className="font-display font-semibold text-lg text-neutral-900 dark:text-white mb-3">
                   {t('product.description')}
                 </h2>
-                <p className="text-neutral-600 leading-relaxed">{product.description}</p>
+                <p className="text-neutral-600 dark:text-gray-300 leading-relaxed">{product.description}</p>
               </div>
             )}
             {product.benefits?.length > 0 && (
               <div>
-                <h2 className="font-display font-semibold text-lg text-neutral-900 mb-3">
+                <h2 className="font-display font-semibold text-lg text-neutral-900 dark:text-white mb-3">
                   {t('product.benefits')}
                 </h2>
                 <ul className="space-y-2">
                   {product.benefits.map((b, i) => (
-                    <li key={i} className="flex items-start gap-2 text-neutral-600">
+                    <li key={i} className="flex items-start gap-2 text-neutral-600 dark:text-gray-300">
                       <span className="text-[#2563EB] mt-0.5">✓</span>
                       {b}
                     </li>
@@ -119,7 +119,7 @@ export default function ProductPage() {
         {/* Productos relacionados */}
         {relatedFiltered.length > 0 && (
           <div>
-            <h2 className="font-display font-semibold text-2xl text-neutral-900 mb-6">
+            <h2 className="font-display font-semibold text-2xl text-neutral-900 dark:text-white mb-6">
               {t('product.relatedProducts')}
             </h2>
             <ProductGrid products={relatedFiltered} loading={false} />

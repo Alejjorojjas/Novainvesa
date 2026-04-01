@@ -78,12 +78,12 @@ export default function PaymentSelector({ paymentMethod, onChange, city, total }
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-5 md:p-6">
-      <h2 className="font-display font-semibold text-lg text-neutral-900 mb-1">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 md:p-6">
+      <h2 className="font-display font-semibold text-lg text-neutral-900 dark:text-white mb-1">
         {t('checkout.payment.title')}
       </h2>
       {codStatus === 'checking' && (
-        <p className="flex items-center gap-1.5 text-xs text-neutral-500 mb-3">
+        <p className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-gray-400 mb-3">
           <Loader2 className="w-3.5 h-3.5 animate-spin" />
           {t('checkout.payment.verifying')}
         </p>
@@ -102,10 +102,10 @@ export default function PaymentSelector({ paymentMethod, onChange, city, total }
                 flex items-start gap-4 p-4 rounded-xl border-2 cursor-pointer
                 transition-all duration-200
                 ${disabled
-                  ? 'border-neutral-100 bg-neutral-50 opacity-60 cursor-not-allowed'
+                  ? 'border-neutral-100 dark:border-gray-700 bg-neutral-50 dark:bg-gray-700/50 opacity-60 cursor-not-allowed'
                   : paymentMethod === method.id
-                    ? 'border-[#2563EB] bg-blue-50'
-                    : 'border-neutral-200 hover:border-neutral-300 bg-white'
+                    ? 'border-[#2563EB] bg-blue-50 dark:bg-blue-900/30'
+                    : 'border-neutral-200 dark:border-gray-600 hover:border-neutral-300 dark:hover:border-gray-500 bg-white dark:bg-gray-700'
                 }
               `}
             >
@@ -121,14 +121,14 @@ export default function PaymentSelector({ paymentMethod, onChange, city, total }
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">{method.icon}</span>
-                  <span className="font-semibold text-sm text-neutral-900">
+                  <span className="font-semibold text-sm text-neutral-900 dark:text-white">
                     {t(method.labelKey)}
                   </span>
                   {isCod && codStatus === 'available' && !codOverLimit && (
                     <CheckCircle2 className="w-4 h-4 text-green-500" />
                   )}
                 </div>
-                <p className="text-xs text-neutral-500 mt-0.5 ml-7">
+                <p className="text-xs text-neutral-500 dark:text-gray-400 mt-0.5 ml-7">
                   {t(method.descKey)}
                 </p>
                 {unavailableMsg && (

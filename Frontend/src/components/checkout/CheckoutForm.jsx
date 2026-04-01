@@ -24,8 +24,8 @@ export default function CheckoutForm({ formData, errors, onChange, onBlur }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-5 md:p-6">
-      <h2 className="font-display font-semibold text-lg text-neutral-900 mb-5">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 md:p-6">
+      <h2 className="font-display font-semibold text-lg text-neutral-900 dark:text-white mb-5">
         {t('checkout.steps.data')}
       </h2>
 
@@ -37,7 +37,7 @@ export default function CheckoutForm({ formData, errors, onChange, onBlur }) {
           >
             <label
               htmlFor={`field-${field.name}`}
-              className="block text-sm font-medium text-neutral-700 mb-1"
+              className="block text-sm font-medium text-neutral-700 dark:text-gray-200 mb-1"
             >
               {t(field.label)}
               {field.required && <span className="text-red-500 ml-0.5">*</span>}
@@ -51,12 +51,12 @@ export default function CheckoutForm({ formData, errors, onChange, onBlur }) {
               onBlur={() => handleBlur(field.name)}
               autoComplete={field.name}
               className={`
-                w-full px-4 py-2.5 rounded-xl border text-sm text-neutral-900
-                placeholder-neutral-400 transition-all duration-200
+                w-full px-4 py-2.5 rounded-xl border text-sm text-neutral-900 dark:text-white
+                placeholder-neutral-400 dark:placeholder-gray-500 transition-all duration-200
                 focus:outline-none focus:ring-2 focus:border-transparent
                 ${errors[field.name]
-                  ? 'border-red-400 bg-red-50 focus:ring-red-300'
-                  : 'border-neutral-200 bg-white focus:ring-[#2563EB]'
+                  ? 'border-red-400 bg-red-50 focus:ring-red-300 dark:bg-red-900/20 dark:border-red-500'
+                  : 'border-neutral-200 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-[#2563EB]'
                 }
               `}
             />
@@ -70,7 +70,7 @@ export default function CheckoutForm({ formData, errors, onChange, onBlur }) {
 
         {/* Notas — textarea */}
         <div className="col-span-2">
-          <label htmlFor="field-notes" className="block text-sm font-medium text-neutral-700 mb-1">
+          <label htmlFor="field-notes" className="block text-sm font-medium text-neutral-700 dark:text-gray-200 mb-1">
             {t('checkout.form.notes')}
           </label>
           <textarea
@@ -80,7 +80,7 @@ export default function CheckoutForm({ formData, errors, onChange, onBlur }) {
             value={formData.notes || ''}
             onChange={e => handleChange('notes', e.target.value)}
             placeholder={t('checkout.form.notesPlaceholder')}
-            className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 bg-white text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition-all duration-200 resize-none"
+            className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition-all duration-200 resize-none"
           />
         </div>
       </div>

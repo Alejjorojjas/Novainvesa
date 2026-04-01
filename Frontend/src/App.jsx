@@ -1,6 +1,7 @@
 ﻿import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import { LanguageProvider } from './context/LanguageContext'
+import { ThemeProvider } from './context/ThemeContext'
 import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 import WhatsAppFloat from './components/common/WhatsAppFloat'
@@ -34,7 +35,7 @@ function AppLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col">
+    <div className="min-h-screen bg-neutral-50 dark:bg-gray-900 flex flex-col">
       <Navbar />
       <main className="flex-1">
         <Routes>
@@ -63,13 +64,15 @@ function AppLayout() {
 
 function App() {
   return (
-    <LanguageProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <AppLayout />
-        </BrowserRouter>
-      </CartProvider>
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <AppLayout />
+          </BrowserRouter>
+        </CartProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   )
 }
 
