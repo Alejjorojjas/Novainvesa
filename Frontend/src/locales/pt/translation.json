@@ -134,7 +134,8 @@
     "insufficientFunds": "Saldo insuficiente. Tente outro método de pagamento.",
     "paymentTimeout": "O pagamento expirou. Por favor, tente novamente.",
     "serverError": "Ocorreu um erro. Por favor, tente novamente.",
-    "networkError": "Sem conexão. Verifique sua internet e tente novamente."
+    "networkError": "Sem conexão. Verifique sua internet e tente novamente.",
+    "orderFailed": "Erro ao processar seu pedido. Por favor tente novamente."
   },
   "search": {
     "placeholder": "Buscar produtos...",

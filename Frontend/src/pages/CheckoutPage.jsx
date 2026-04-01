@@ -77,12 +77,13 @@ export default function CheckoutPage() {
     try {
       const orderPayload = {
         customer: {
-          full_name: formData.fullName,
-          id_number: formData.idNumber,
+          fullName: formData.fullName,
+          idNumber: formData.idNumber,
           email: formData.email,
           phone: formData.phone,
         },
-        shipping_address: {
+        shipping: {
+          country: 'CO',
           department: formData.department,
           city: formData.city,
           address: formData.address,
@@ -90,18 +91,24 @@ export default function CheckoutPage() {
           notes: formData.notes,
         },
         items: items.map(i => ({
-          product_id: i.productId,
-          dropi_product_id: i.dropiProductId,
+          productId: i.productId,
+          dropiProductId: i.dropiProductId,
           name: i.name,
+          image: i.image,
+          category: i.category,
           quantity: i.quantity,
-          unit_price: i.price,
+          unitPrice: i.price,
+          currency: 'COP',
         })),
-        payment_method: formData.paymentMethod,
-        total,
+        payment: {
+          method: formData.paymentMethod,
+          total,
+        },
+        source: 'WEB',
       }
 
       const { data } = await api.post('/api/v1/orders', orderPayload)
-      const orderId = data?.data?.orderId || data?.data?.id
+      const orderId = data?.data?.order?.id
 
       try {
         pixel.trackPurchase(orderId, items, total)
