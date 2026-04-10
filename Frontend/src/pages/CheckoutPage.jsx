@@ -148,6 +148,7 @@ export default function CheckoutPage() {
               onChange={value => handleChange('paymentMethod', value)}
               city={formData.city}
               total={total}
+              onCodVerified={() => handleChange('codCoverageVerified', true)}
             />
             {errors.paymentMethod && (
               <p className="text-sm text-red-500 -mt-4">{t(errors.paymentMethod)}</p>

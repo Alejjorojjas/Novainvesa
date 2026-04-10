@@ -26,7 +26,7 @@ const METHODS = [
   },
 ]
 
-export default function PaymentSelector({ paymentMethod, onChange, city, total }) {
+export default function PaymentSelector({ paymentMethod, onChange, city, total, onCodVerified }) {
   const { t } = useTranslation()
   const [codStatus, setCodStatus] = useState('idle') // idle | checking | available | unavailable
   const [codMessage, setCodMessage] = useState('')
@@ -52,6 +52,7 @@ export default function PaymentSelector({ paymentMethod, onChange, city, total }
         if (data.codAvailable) {
           setCodStatus('available')
           setCodMessage('')
+          if (onCodVerified) onCodVerified()
         } else {
           setCodStatus('unavailable')
           setCodMessage(t('checkout.payment.codNotAvailable'))

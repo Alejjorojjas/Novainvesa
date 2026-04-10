@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, useSearchParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CheckCircle2, Package, ArrowRight, Home } from 'lucide-react'
+import { CheckCircle2, Package, Home } from 'lucide-react'
 import { formatPrice } from '../utils/formatters'
 import { usePixel } from '../hooks/usePixel'
 import { siteConfig } from '../config/site'
@@ -103,15 +103,6 @@ export default function ConfirmationPage() {
         )}
 
         <div className="flex flex-col gap-3">
-          {orderId && (
-            <Link
-              to={'/rastrear/' + orderId}
-              className="w-full flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-3.5 rounded-xl transition-colors duration-200"
-            >
-              {t('confirmation.trackOrder')}
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          )}
           <a
             href={whatsappHref}
             target="_blank"

@@ -11,7 +11,7 @@ export default function FeaturedProducts() {
   return (
     <section className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-12">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-display font-semibold text-2xl text-neutral-900">
+        <h2 className="font-display font-semibold text-2xl text-neutral-900 dark:text-white">
           {t('home.featured')}
         </h2>
         <Link

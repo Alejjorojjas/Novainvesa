@@ -53,20 +53,20 @@ export default function CartDrawer() {
         aria-label={t('cart.title')}
         className={`
           fixed top-0 right-0 z-50 h-full w-full max-w-sm
-          bg-white shadow-2xl flex flex-col
+          bg-white dark:bg-gray-800 shadow-2xl flex flex-col
           transition-transform duration-300 ease-in-out
           ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}
         `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-100">
-          <h2 className="font-display font-semibold text-lg text-neutral-900">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-100 dark:border-gray-700">
+          <h2 className="font-display font-semibold text-lg text-neutral-900 dark:text-white">
             {t('cart.title')}
           </h2>
           <button
             onClick={closeCart}
             aria-label={t('common.close')}
-            className="p-2 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors duration-200"
+            className="p-2 text-neutral-500 dark:text-gray-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
           >
             <X className="w-5 h-5" />
           </button>
@@ -75,9 +75,9 @@ export default function CartDrawer() {
         {/* Contenido */}
         {items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-4 px-5 text-center">
-            <ShoppingCart className="w-16 h-16 text-neutral-200" />
-            <p className="font-semibold text-neutral-700">{t('cart.empty')}</p>
-            <p className="text-sm text-neutral-500">{t('cart.emptyDesc')}</p>
+            <ShoppingCart className="w-16 h-16 text-neutral-200 dark:text-gray-600" />
+            <p className="font-semibold text-neutral-700 dark:text-gray-200">{t('cart.empty')}</p>
+            <p className="text-sm text-neutral-500 dark:text-gray-400">{t('cart.emptyDesc')}</p>
             <button
               onClick={closeCart}
               className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold px-6 py-2.5 rounded-xl transition-colors duration-200"
@@ -95,10 +95,10 @@ export default function CartDrawer() {
             </div>
 
             {/* Footer */}
-            <div className="px-5 py-4 border-t border-neutral-100 bg-white space-y-3">
+            <div className="px-5 py-4 border-t border-neutral-100 dark:border-gray-700 bg-white dark:bg-gray-800 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-neutral-600 font-medium">{t('cart.subtotal')}</span>
-                <span className="font-bold text-lg text-neutral-900">{formatPrice(getTotal())}</span>
+                <span className="text-neutral-600 dark:text-gray-400 font-medium">{t('cart.subtotal')}</span>
+                <span className="font-bold text-lg text-neutral-900 dark:text-white">{formatPrice(getTotal())}</span>
               </div>
               <button
                 onClick={handleCheckout}
@@ -109,7 +109,7 @@ export default function CartDrawer() {
               </button>
               <button
                 onClick={closeCart}
-                className="w-full text-center text-sm text-neutral-500 hover:text-neutral-700 transition-colors duration-200"
+                className="w-full text-center text-sm text-neutral-500 dark:text-gray-400 hover:text-neutral-700 dark:hover:text-gray-200 transition-colors duration-200"
               >
                 {t('cart.continueShopping')}
               </button>

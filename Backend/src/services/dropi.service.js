@@ -53,14 +53,28 @@ async function dropiRequest(method, path, options = {}) {
 
 // ─── COD COVERAGE ───────────────────────────────────────────────────────────
 async function checkCodCoverage(cityName) {
+  const city = cityName || "";
+
   try {
-    const data = await dropiRequest("GET", `/api/v1/cities?search=${encodeURIComponent(cityName)}`);
+    const data = await dropiRequest("GET", `/api/v1/cities?search=${encodeURIComponent(city)}`);
     const cities = data.objects || data.data || [];
-    return cities.some(
-      (c) => c.name?.toLowerCase() === cityName?.toLowerCase() && c.cod_available !== false
+    const match = cities.find(
+      (c) => c.name?.toLowerCase() === city?.toLowerCase() && c.cod_available !== false
     );
+
+    if (!match) {
+      return { codAvailable: false, city, estimatedDelivery: null };
+    }
+
+    const days =
+      match.estimated_delivery_days ||
+      match.delivery_days ||
+      match.estimatedDeliveryDays;
+    const estimatedDelivery = days ? `${days} días hábiles` : "2 a 5 días hábiles";
+
+    return { codAvailable: true, city, estimatedDelivery };
   } catch {
-    return true;
+    return { codAvailable: false, city, estimatedDelivery: null };
   }
 }
 
